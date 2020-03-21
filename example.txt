@@ -1,0 +1,32 @@
+IMPORT standard
+
+REPLACE ?entity[=]if entity @e[name = "ExampleEntity"]
+
+//Run main every tick
+*minecraft:tick
+
+:execute ?entity {
+    say hello
+}
+
+*coolstuff
+:while ?entity {
+    say ?entity
+    kill @e[name="ExampleEntity"]
+    say Hello
+}
+
+// Run this function on load
+*minecraft:load
+:function exampleFunction {
+    say Hello new world
+    :while if entity @a {
+        say hello
+    }
+    say End of function
+}
+
+// Run the load function again
+:run exampleFunction
+
+:run otherpack:count

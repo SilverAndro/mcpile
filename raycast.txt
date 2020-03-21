@@ -1,0 +1,17 @@
+IMPORT populate
+IMPORT standard
+
+*minecraft:load
+:function load {
+    scoreboard objectives add rayCount dummy
+}
+
+*minecraft:tick
+:execute as @a at @s anchored eyes {
+    scoreboard players set @s rayCount 100
+    :while if score @s rayCount matches 0.. positioned ^ ^ ^0.05 {
+        $solid_blocks.txt execute if block ~ ~ ~ {} run say {}$
+        scoreboard players remove @s rayCount 1
+        execute unless block ~ ~ ~ air unless block ~ ~ ~ cave_air unless block ~ ~ ~ void_air run scoreboard players reset @s rayCount
+    }
+}
