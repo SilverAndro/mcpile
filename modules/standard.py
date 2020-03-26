@@ -2,7 +2,7 @@ import os
 import json
 import re
 
-from sugar import newSyntax, returnStatus
+from sugar import newSyntax, newPreparse, returnStatus
 
 def createFolder(directory):
     try:
@@ -35,7 +35,7 @@ def registerSubstitution(info, line):
     return returnStatus(keepgoing=False)
 
 
-def tagManager(info, line):
+def activeTagManager(info, line):
     seperated = line.split(" ")
 
     tagID = seperated[0]
@@ -44,6 +44,22 @@ def tagManager(info, line):
 
     return returnStatus(keepgoing=False)
 
+def passiveTagManager(info, text:str):
+    split = text.split("openTagFile")
+    combosplit = [final.strip() for group in split for final in group.split("closeTagFile")]
+    for i in range(len(combosplit)):
+        if (i + 1) % 2 == 0:
+            # Handle good group
+            lines = combosplit[i].split("\n")
+
+            tagFileInfo = lines[0]
+
+            print(tagFileInfo)
+
+            for line in lines[1:]:
+                if len(line) > 0:
+                    print(line)
+    return text
 
 def executeDepth(info, line):
     line = 'execute ' + line
@@ -125,7 +141,7 @@ def handleLeave(info, line):
 
 
 newSyntax("lineStart", ["REPLACE"], registerSubstitution)
-newSyntax("lineStart", ["*"], tagManager)
+newSyntax("lineStart", ["*"], activeTagManager)
 newSyntax("lineStart", ["//"], ignoreComment)
 newSyntax("lineStart", [":execute"], executeDepth)
 newSyntax("lineStart", [":while"], whileDepth)
@@ -133,3 +149,5 @@ newSyntax("lineStart", [":do"], doDepth)
 newSyntax("lineStart", [":function"], functionGen)
 newSyntax("lineStart", [":run"], callfunction)
 newSyntax("lineStart", ["}"], handleLeave)
+
+newPreparse(passiveTagManager)
