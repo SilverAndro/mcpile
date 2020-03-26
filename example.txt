@@ -30,3 +30,10 @@ REPLACE ?entity[=]if entity @e[name = "ExampleEntity"]
 :run exampleFunction
 
 :run otherpack:count
+
+openTagFile
+
+Hello world!
+How are you?
+
+closeTagFile
