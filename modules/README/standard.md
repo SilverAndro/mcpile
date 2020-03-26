@@ -48,13 +48,22 @@ IMPORT standard
 // To run the function
 :run <function name>
 ```
-6. [Tags](https://minecraft.gamepedia.com/Tag#Function_Tags) (Next file/context writen to is tagged in the titled tag file, use `minecraft:<tag>` to place tag in minecraft namespace)
-```
-IMPORT standard
 
-*<tag text>
-<commands>
-```
+6. [Tags](https://minecraft.gamepedia.com/Tag#Function_Tags)
+    a. Active (Next file/context writen to is tagged in the titled tag file, use `minecraft:<tag>` to place tag in minecraft namespace)
+    ```
+    IMPORT standard
+    
+    *<tag text>
+    <commands>
+    ```
+    b. Passive (Create a tag file in a non-function enviroment, preparsed)
+    ```
+    IMPORT standard
+
+    *<tag text>
+    <commands>
+    ```
 7. Comments
 ```
 IMPORT standard
