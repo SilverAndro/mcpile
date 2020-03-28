@@ -18,7 +18,11 @@ def populate(info, text):
             with open(os.path.join(dir_path, "PopulateFiles", populateList)) as f:
                 for entry in f.readlines():
                     entry = entry.strip()
-                    filled.append(toFill.replace("{}", entry).strip())
+
+                    tmp = toFill.replace("{}", entry)
+                    tmp = tmp.replace("{NAMESPACE}", info.namepspace)
+
+                    filled.append(tmp.strip())
 
             for filledText in filled:
                 out += filledText + "\n"
